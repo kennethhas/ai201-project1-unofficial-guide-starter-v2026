@@ -69,23 +69,22 @@ in at least 4 of 5 tries.
        - "No chunk is shorter than 200 characters, since anything below that
           in my corpus turned out to be a heading with no content under it." -->
 
-
+At least 4 out of 5 sampled chunks should contain a complete statement that can be understood without needing the text before or after it.
 
 **Why this target:**
-
-
+I chose 4 out of 5 because most chunks should give enough context for the AI to understand the information correctly. I allowed one chunk to be incomplete because some advice-thread replies may depend on earlier messages.
 
 ---
 
 ## 5. Your choice
 
-<!-- YOU WRITE THIS ONE TOO.
+<!--YOU WRITE THIS ONE TOO.
 
      Pick something you actually care about getting right. It could be about
      speed, about refusals, about a particular kind of question your corpus
      handles badly, about source attribution being correct rather than merely
      present — anything, as long as it names a number or an observable
-     outcome. -->
+     outcome. --> 
 
 
 
