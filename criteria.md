@@ -26,6 +26,7 @@ contains the answer.
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
 
+I chose 4 out of 5 because the campus_life corpus contains many short documents about similar campus topics, so retrieval may occasionally return a related document instead of the exact one. I still expect the correct information to appear for most of my test questions.
 ---
 
 ## 2. Every answer names a source
@@ -35,6 +36,8 @@ Every answer the system produces names at least one source document.
 **Why this target:**
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
+
+I chose every answer because the system is designed to answer from retrieved campus documents and already keeps track of the source filename for each chunk. If an answer does not name a source, I would not be able to verify where the information came from
 
 ---
 
@@ -53,9 +56,11 @@ in at least 4 of 5 tries.
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
 
+I chose 4 out of 5 because the relevance gate depends on similarity distance, and an unrelated question could still accidentally resemble wording in one of the campus documents.I expect the gate to reject most clearly unrelated questions, but I allowed one miss because semantic similarity is not always perfect.
+
 ---
 
-## 4. Something about your chunks
+## 4. Chunks can be understood on their own
 
 <!-- YOU WRITE THIS ONE.
 
@@ -76,7 +81,7 @@ I chose 4 out of 5 because most of the campus_life documents are short and focus
 
 ---
 
-## 5. Your choice
+## 5. Final answers contain the expected information.
 
 <!--YOU WRITE THIS ONE TOO.
 
@@ -87,7 +92,7 @@ I chose 4 out of 5 because most of the campus_life documents are short and focus
      outcome. --> 
 
 
-5 of my 5 test questions, the final answer contains the expected
+For 5 of my 5 test questions, the final answer contains the expected
 word or phrase listed in questions.py.
 
 **Why this target:**

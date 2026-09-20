@@ -1,6 +1,6 @@
 # The Unofficial Guide
 
-<!-- Replace this line with your name and which corpus you picked. -->
+Kenneth.Hasiholan — Corpus: `campus_life` 
 
 > **This file is your submission.** Fill it in as you go — most sections get
 > written during the milestone that produces them, not at the end.
@@ -27,10 +27,13 @@
 
      Milestone 5. -->
 
+This project is a retrieval-based question-answering system built on the campus_life corpus. Users can ask specific questions about campus topics like housing, courses, dining, registration, and library policies. The system pulls the document chunks that look most relevant and checks whether they actually contain enough to answer. If they do, it writes an answer using only those chunks. If they don't, it refuses instead of guessing.
+
+
 ## Chunking Strategy
 
-**Chunk size:500 characters **
-**Overlap: 1 sentence when a split occurs**
+**Chunk size: ** 500 characters
+**Overlap: ** 1 sentence when a split occurs
 
 <!-- What about YOUR documents made you pick these numbers? Short posts and
      long sectioned guides don't want the same chunking, and "800 seemed
@@ -103,8 +106,7 @@ The bad: known damp problem on the ground floor; two rooms were taken offline in
 
 Laundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiet hours.
 
-For each one, ask: could someone answer a question using only this,
-without reading what came before or after?
+
 
 ## Sample Answer
 
@@ -159,9 +161,19 @@ I kept the cutoff at 0.6 because my five in-corpus questions had best distances 
 
      Milestone 5. -->
 
-**1.**
+**1.Understanding and changing the chunking strategy**
 
-**2.**
+I first used AI to help me understand the starter chunker.py before changing any code. I wanted to understand what fallback_split, split_documents, chunk size, and overlap were actually doing instead of replacing the function without knowing why.
+
+After looking at my baseline, I saw that campus_life had 88 documents averaging about 317 characters, and the starter produced exactly 88 chunks because almost every document was shorter than the 800-character limit. AI suggested a few possible strategies, including a more general paragraph-and-sentence-based chunker. I considered making the chunker more universal, but decided that would be more complicated than this milestone needed.
+
+I chose a simpler sentence-aware approach: keep short documents whole, use a target of 500 characters for longer documents, split only at sentence boundaries, and carry one sentence into the next chunk as overlap. After re-indexing, the system produced 90 chunks with a longest chunk of 461 characters. I also printed the chunks and checked that the shorter chunks still contained complete thoughts instead of broken sentence fragments.
+
+**2.Checking retrieval and choosing the relevance cutoff **
+
+I also used AI while working through the retrieval results in Milestone 4. I first ran my own retrieval commands and noticed that the correct document appeared as the top result for the questions I checked, while some lower-ranked results were only loosely related. I used AI to help me understand why this happened and decided to keep top-k at 5 because the correct source was already appearing at rank 1 and increasing the number would mostly add more unrelated chunks.
+
+I then ran all five of my in-corpus questions and all five OUT_OF_SCOPE questions and recorded the best distance for each one. My in-corpus distances ranged from 0.1289 to 0.5301, while the out-of-scope distances ranged from 0.8246 to 0.9340. I used AI to help compare those two groups, but I used the actual numbers from my own runs to make the decision. Because there was a clear gap between 0.5301 and 0.8246, I decided to keep the existing relevance cutoff at 0.6 rather than changing it just to make a change.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
