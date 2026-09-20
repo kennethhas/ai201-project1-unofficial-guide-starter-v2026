@@ -1,3 +1,4 @@
+import re
 """
 Stage 2 of the pipeline: splitting documents into chunks.
 
@@ -21,6 +22,7 @@ If you get stuck for 30 minutes, `fallback_split` is the original. Switch back
 to it, write down what you saw, and move on. That's a real observation about
 your pipeline, not giving up.
 """
+
 
 from dataclasses import dataclass
 
@@ -82,22 +84,75 @@ def fallback_split(
 
 def split_documents(documents: list[Document]) -> list[Chunk]:
     """
-    Split documents into chunks. ⚠️ REPLACE THE BODY OF THIS IN MILESTONE 3.
+    Split documents into sentence-aware chunks.
 
-    Right now it just calls the fallback. That is the plain, generic behaviour
-    the brief is talking about.
-
-    When you write your own strategy, set `produced_by` to
-    "chunker.py::split_documents" so your README's Sample Chunks section names
-    the right function. `app.py chunks` prints that string for you.
-
-    Things worth thinking about before you write any code:
-      - Are your documents short posts or long guides?
-      - Is the useful information in one sentence, or spread over a paragraph?
-      - Would splitting on paragraph breaks keep more thoughts intact than
-        splitting on a character count?
+    Short documents stay whole. Longer documents are split at sentence
+    boundaries, with one sentence of overlap to help preserve context.
     """
-    return fallback_split(documents)
+    max_size = 500
+    chunks: list[Chunk] = []
+
+    for doc in documents:
+        text = doc.text.strip()
+
+        if not text:
+            continue
+
+        # Short documents already work well as one chunk.
+        if len(text) <= max_size:
+            chunks.append(
+                Chunk(
+                    text=text,
+                    source=doc.source,
+                    index=0,
+                    produced_by="chunker.py::split_documents",
+                )
+            )
+            continue
+
+        # Split longer documents into complete sentences.
+        sentences = re.split(r"(?<=[.!?])\s+", text)
+
+        current: list[str] = []
+        index = 0
+
+        for sentence in sentences:
+            sentence = sentence.strip()
+
+            if not sentence:
+                continue
+
+            candidate = " ".join(current + [sentence])
+
+            if current and len(candidate) > max_size:
+                chunks.append(
+                    Chunk(
+                        text=" ".join(current),
+                        source=doc.source,
+                        index=index,
+                        produced_by="chunker.py::split_documents",
+                    )
+                )
+
+                index += 1
+
+                # Repeat the last sentence as overlap.
+                current = [current[-1], sentence]
+
+            else:
+                current.append(sentence)
+
+        if current:
+            chunks.append(
+                Chunk(
+                    text=" ".join(current),
+                    source=doc.source,
+                    index=index,
+                    produced_by="chunker.py::split_documents",
+                )
+            )
+
+    return chunks
 
 
 def describe(chunks: list[Chunk]) -> str:
