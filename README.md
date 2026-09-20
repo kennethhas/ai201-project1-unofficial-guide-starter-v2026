@@ -29,8 +29,8 @@
 
 ## Chunking Strategy
 
-**Chunk size:**
-**Overlap:**
+**Chunk size:500 characters **
+**Overlap: 1 sentence when a split occurs**
 
 <!-- What about YOUR documents made you pick these numbers? Short posts and
      long sectioned guides don't want the same chunking, and "800 seemed
@@ -41,6 +41,9 @@
      more than pretending you got it right first time.
 
      Milestone 3. -->
+
+The campus_life corpus is 88 short documents, averaging around 317 characters. Most are short enough that I leave them whole. Anything longer than the target size gets split on sentence boundaries rather than at a fixed character count, so a chunk never ends mid-sentence. When that happens, the last sentence carries into the next chunk as overlap to keep some context around the split.
+
 
 ## Sample Chunks
 
@@ -53,30 +56,55 @@
 
      Milestone 3. -->
 
-**Chunk 1** — source: `` — produced by: ``
+======================================================================
+Chunk 1  |  source: admin_add_drop_deadline.txt#0  |  produced by: chunker.py::split_documents
+======================================================================
+On the add/drop deadline
 
-```
-```
+You can add a course through the end of the second week. Dropping is a longer window — through the end of week six — but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other.
 
-**Chunk 2** — source: `` — produced by: ``
+======================================================================
+Chunk 2  |  source: course_biol_160_exams.txt#0  |  produced by: chunker.py::split_documents
+======================================================================
+BIOL 160 Cell Biology — assessment
 
-```
-```
+Four unit tests and a cumulative final. Not curved.
 
-**Chunk 3** — source: `` — produced by: ``
+The unit tests come fast, roughly every three weeks; falling behind once is very hard to recover from.
 
-```
-```
+======================================================================
+Chunk 3  |  source: course_math_220_exams.txt#0  |  produced by: chunker.py::split_documents
+======================================================================
+MATH 220 Linear Algebra — assessment
 
-**Chunk 4** — source: `` — produced by: ``
+Two midterms and a cumulative final. Curved to a b- median.
 
-```
-```
+The problem sets are the course; the lectures make sense afterwards rather than during.
 
-**Chunk 5** — source: `` — produced by: ``
+======================================================================
+Chunk 4  |  source: dining_the_ridgeway_cafe.txt#0  |  produced by: chunker.py::split_documents
+======================================================================
+The Ridgeway Café
 
-```
-```
+Second-year here. Wait times: 10 to 15 minutes at 12:30, none after 2:00. The thing worth going for is the only place on campus with real espresso. The thing to know is that seating is tight; about 40 seats for a building of 900.
+
+Hours are 7:00am to 4:00pm weekdays only. Costs declining balance only, no meal swipes.
+
+======================================================================
+Chunk 5  |  source: housing_morrow_house.txt#0  |  produced by: chunker.py::split_documents
+======================================================================
+Morrow House — what it's actually like
+
+Just finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hall bathrooms.
+
+The good: cheapest housing tier by about $900 a year, and the singles are real singles.
+
+The bad: known damp problem on the ground floor; two rooms were taken offline in 2024.
+
+Laundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiet hours.
+
+For each one, ask: could someone answer a question using only this,
+without reading what came before or after?
 
 ## Sample Answer
 
@@ -84,13 +112,18 @@
      visible. Milestone 4. -->
 
 **Question:**
-
+How long does it usually take for a checked-out library book on hold to arrive?
 **Answer:**
 
-```
-```
+It usually takes two to three days for a checked-out book on hold to arrive.
 
-**My relevance cutoff:**
+Source: admin_library_holds.txt
+
+
+**My relevance cutoff:** 0.6
+
+I kept the cutoff at 0.6 because my five in-corpus questions had best distances between 0.1289 and 0.5301, while my five out-of-scope questions had best distances between 0.8246 and 0.9340. There is a clear gap between 0.5301 and 0.8246, and 0.6 falls inside that gap.
+
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -102,8 +135,18 @@
      Milestone 4. -->
 
 | Question | In corpus? | Best distance |
-|---|---|---|
-|  |  |  |
+|---|---|---:|
+| How long does it usually take for a checked-out library book on hold to arrive? | Yes | 0.1289 |
+| Is the housing lottery completely random? | Yes | 0.2514 |
+| For Econ 101, how many hours a week should I expect outside class? | Yes | 0.2755 |
+| What is the grade for passing a course? | Yes | 0.4001 |
+| What are the requirements for advising registration? | Yes | 0.5301 |
+| What is the capital of Mongolia? | No | 0.8246 |
+| What is the recommended dosage of ibuprofen for a headache? | No | 0.8442 |
+| Who won the 1994 World Cup? | No | 0.8859 |
+| How do I write a for loop in Rust? | No | 0.8960 |
+| How do I change the oil in a diesel engine? | No | 0.9340 |
+
 
 ## How I Used AI
 
