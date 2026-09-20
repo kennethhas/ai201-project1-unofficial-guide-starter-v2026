@@ -72,7 +72,7 @@ in at least 4 of 5 tries.
 At least 4 out of 5 sampled chunks should contain a complete statement that can be understood without needing the text before or after it.
 
 **Why this target:**
-I chose 4 out of 5 because most chunks should give enough context for the AI to understand the information correctly. I allowed one chunk to be incomplete because some advice-thread replies may depend on earlier messages.
+I chose 4 out of 5 because most of the campus_life documents are short and focused, so the chunks should usually contain enough context to make sense on their own. I allowed one chunk to be incomplete because some information could still be split in a way that depends on nearby text.
 
 ---
 
@@ -87,8 +87,13 @@ I chose 4 out of 5 because most chunks should give enough context for the AI to 
      outcome. --> 
 
 
+5 of my 5 test questions, the final answer contains the expected
+word or phrase listed in questions.py.
 
 **Why this target:**
+
+I chose 5 out of 5 because I intentionally selected questions whose answers are contained in the documents. If the system retrieves the correct information, I expect the final answer to include the key fact for every test question.
+
 
 
 

@@ -22,18 +22,18 @@ names a target of "4 of 5", and four of three is not a thing.
 """
 
 QUESTIONS = [
-    # {"question": "How much does a parking permit cost? ",
-       "expects": "$100"},
-      {"question": "what is the best way to use office hours? ",
-       "expects": "weekly "},
-      {"question": "When is laundry actually free in the dorms?", 
-       "expects": "every day "},
-      {"question": "Which meal plan tier is right?",
-       "expects": "The highest tier only makes sense if you eat three meals a day in the halls every single day"},
-      {"question": "How much laptop do I actually need for CS courses?",
-        "expects": "Less than the recommended spec page says. 16GB of RAM is the one number worth paying for"},
-      {"question": "What is the grade for passing?", 
-        "expects": "C+"},
+    # {"question": "Is the housing lottery completely random? ",
+       "expects": "credit hours"},
+      {"question": "For Econ 101, will there be outside class where we learn outside of the classroom? ",
+       "expects": " 4 hours "},
+      {"question": "How long will it take for my book to come in from the library? ", 
+       "expects": "2-3 hours "},
+      {"question": "How much printing quota do students receive?",
+       "expects": "a couple dollars "},
+      {"question": "What are the requirements for advising registration ?",
+        "expects": "credit hours"},
+      {"question": "What is the grade for passing a course ?", 
+        "expects": "C-"},
 ]
 
 # Questions from a different world entirely. Your gate should refuse all five.
