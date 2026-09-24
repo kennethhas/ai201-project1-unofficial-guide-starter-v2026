@@ -1,6 +1,6 @@
 # The Unofficial Guide
 
-Kenneth.Hasiholan — Corpus: `campus_life` 
+Kenneth.Hasiholan — Corpus: `campus_life`
 
 > **This file is your submission.** Fill it in as you go — most sections get
 > written during the milestone that produces them, not at the end.
@@ -29,7 +29,6 @@ Kenneth.Hasiholan — Corpus: `campus_life`
 
 This project is a retrieval-based question-answering system built on the campus_life corpus. Users can ask specific questions about campus topics like housing, courses, dining, registration, and library policies. The system pulls the document chunks that look most relevant and checks whether they actually contain enough to answer. If they do, it writes an answer using only those chunks. If they don't, it refuses instead of guessing.
 
-
 ## Chunking Strategy
 
 **Chunk size: ** 500 characters
@@ -47,7 +46,6 @@ This project is a retrieval-based question-answering system built on the campus_
 
 The campus_life corpus is 88 short documents, averaging around 317 characters. Most are short enough that I leave them whole. Anything longer than the target size gets split on sentence boundaries rather than at a fixed character count, so a chunk never ends mid-sentence. When that happens, the last sentence carries into the next chunk as overlap to keep some context around the split.
 
-
 ## Sample Chunks
 
 <!-- Five chunks, pasted as text. Label each one and name the file it came from
@@ -60,14 +58,14 @@ The campus_life corpus is 88 short documents, averaging around 317 characters. M
      Milestone 3. -->
 
 ======================================================================
-Chunk 1  |  source: admin_add_drop_deadline.txt#0  |  produced by: chunker.py::split_documents
+Chunk 1 | source: admin_add_drop_deadline.txt#0 | produced by: chunker.py::split_documents
 ======================================================================
 On the add/drop deadline
 
 You can add a course through the end of the second week. Dropping is a longer window — through the end of week six — but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other.
 
 ======================================================================
-Chunk 2  |  source: course_biol_160_exams.txt#0  |  produced by: chunker.py::split_documents
+Chunk 2 | source: course_biol_160_exams.txt#0 | produced by: chunker.py::split_documents
 ======================================================================
 BIOL 160 Cell Biology — assessment
 
@@ -76,7 +74,7 @@ Four unit tests and a cumulative final. Not curved.
 The unit tests come fast, roughly every three weeks; falling behind once is very hard to recover from.
 
 ======================================================================
-Chunk 3  |  source: course_math_220_exams.txt#0  |  produced by: chunker.py::split_documents
+Chunk 3 | source: course_math_220_exams.txt#0 | produced by: chunker.py::split_documents
 ======================================================================
 MATH 220 Linear Algebra — assessment
 
@@ -85,7 +83,7 @@ Two midterms and a cumulative final. Curved to a b- median.
 The problem sets are the course; the lectures make sense afterwards rather than during.
 
 ======================================================================
-Chunk 4  |  source: dining_the_ridgeway_cafe.txt#0  |  produced by: chunker.py::split_documents
+Chunk 4 | source: dining_the_ridgeway_cafe.txt#0 | produced by: chunker.py::split_documents
 ======================================================================
 The Ridgeway Café
 
@@ -94,7 +92,7 @@ Second-year here. Wait times: 10 to 15 minutes at 12:30, none after 2:00. The th
 Hours are 7:00am to 4:00pm weekdays only. Costs declining balance only, no meal swipes.
 
 ======================================================================
-Chunk 5  |  source: housing_morrow_house.txt#0  |  produced by: chunker.py::split_documents
+Chunk 5 | source: housing_morrow_house.txt#0 | produced by: chunker.py::split_documents
 ======================================================================
 Morrow House — what it's actually like
 
@@ -105,8 +103,6 @@ The good: cheapest housing tier by about $900 a year, and the singles are real s
 The bad: known damp problem on the ground floor; two rooms were taken offline in 2024.
 
 Laundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiet hours.
-
-
 
 ## Sample Answer
 
@@ -121,11 +117,9 @@ It usually takes two to three days for a checked-out book on hold to arrive.
 
 Source: admin_library_holds.txt
 
-
 **My relevance cutoff:** 0.6
 
 I kept the cutoff at 0.6 because my five in-corpus questions had best distances between 0.1289 and 0.5301, while my five out-of-scope questions had best distances between 0.8246 and 0.9340. There is a clear gap between 0.5301 and 0.8246, and 0.6 falls inside that gap.
-
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -136,19 +130,18 @@ I kept the cutoff at 0.6 because my five in-corpus questions had best distances 
 
      Milestone 4. -->
 
-| Question | In corpus? | Best distance |
-|---|---|---:|
-| How long does it usually take for a checked-out library book on hold to arrive? | Yes | 0.1289 |
-| Is the housing lottery completely random? | Yes | 0.2514 |
-| For Econ 101, how many hours a week should I expect outside class? | Yes | 0.2755 |
-| What is the grade for passing a course? | Yes | 0.4001 |
-| What are the requirements for advising registration? | Yes | 0.5301 |
-| What is the capital of Mongolia? | No | 0.8246 |
-| What is the recommended dosage of ibuprofen for a headache? | No | 0.8442 |
-| Who won the 1994 World Cup? | No | 0.8859 |
-| How do I write a for loop in Rust? | No | 0.8960 |
-| How do I change the oil in a diesel engine? | No | 0.9340 |
-
+| Question                                                                        | In corpus? | Best distance |
+| ------------------------------------------------------------------------------- | ---------- | ------------: |
+| How long does it usually take for a checked-out library book on hold to arrive? | Yes        |        0.1289 |
+| Is the housing lottery completely random?                                       | Yes        |        0.2514 |
+| For Econ 101, how many hours a week should I expect outside class?              | Yes        |        0.2755 |
+| What is the grade for passing a course?                                         | Yes        |        0.4001 |
+| What are the requirements for advising registration?                            | Yes        |        0.5301 |
+| What is the capital of Mongolia?                                                | No         |        0.8246 |
+| What is the recommended dosage of ibuprofen for a headache?                     | No         |        0.8442 |
+| Who won the 1994 World Cup?                                                     | No         |        0.8859 |
+| How do I write a for loop in Rust?                                              | No         |        0.8960 |
+| How do I change the oil in a diesel engine?                                     | No         |        0.9340 |
 
 ## How I Used AI
 
@@ -200,17 +193,78 @@ I then ran all five of my in-corpus questions and all five OUT_OF_SCOPE question
 
      Milestone 1. -->
 
-| Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
-|---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| Criterion                                         | Target | Run 1 | Run 2 | Run 3 | Verdict |
+| ------------------------------------------------- | ------ | ----- | ----- | ----- | ------- |
+| 1. Retrieved chunks contain the answer            | 4 of 5 | 5/5   | 5/5   | 5/5   | MET     |
+| 2. Every answer names a source                    | 5 of 5 | 5/5   | 5/5   | 5/5   | MET     |
+| 3. Gate stops out-of-corpus questions             | 4 of 5 | 5/5   | 5/5   | 5/5   | MET     |
+| 4. Chunks can be understood on their own          | 4 of 5 | 5/5   | 5/5   | 5/5   | MET     |
+| 5. Final answers contain the expected information | 5 of 5 | 2/5   | 2/5   | 2/5   | MISSED  |
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
+
+results/run_2026-09-23_2123_before.md
+
+### Evidence from the before run
+
+**Criterion 1 — Retrieved chunks contain the answer**
+
+Produced by: `store.py::search`, chunks from `chunker.py::split_documents`
+
+The retrieved source for each of the first five questions contained the answer:
+
+- Housing lottery — `admin_housing_lottery.txt`
+- ECON 101 workload — `course_econ_101_workload.txt`
+- Library holds — `admin_library_holds.txt`
+- Printing quota — `admin_printing_quota.txt`
+- Advising registration — `advising_registration.txt`
+
+Manual result: 5 of 5 retrieved chunks contained the answer.
+
+**Criterion 2 — Every answer names a source**
+
+File: `results/run_2026-09-23_2123_before.md`
+Produced by: `run_eval.py::main`
+
+Question: How much printing quota do students receive?
+
+Students receive $30 of printing per semester.
+
+Source: `admin_printing_quota.txt`
+
+**Criterion 3 — Relevance gate stops out-of-corpus questions**
+
+Produced by: `run_eval.py::check_out_of_scope`
+
+What is the capital of Mongolia? — refused
+How do I change the oil in a diesel engine? — refused
+Who won the 1994 World Cup? — refused
+What is the recommended dosage of ibuprofen for a headache? — refused
+How do I write a for loop in Rust? — refused
+
+Gate refused 5 of 5.
+
+**Criterion 4 — Chunks can be understood on their own**
+
+Produced by: `chunker.py::split_documents`
+
+Chunk 1 — admin_add_drop_deadline.txt#0
+
+You can add a course through the end of the second week. Dropping is a longer window — through the end of week six — but a drop after week two shows as a W on your transcript.
+
+Manual result: 5 of 5 sampled chunks could be understood without needing surrounding text.
+
+**Criterion 5 — Final answers contain the expected information**
+
+Produced by: `run_eval.py::main` using `scorer.py::judge`
+
+Run 1: 2/5
+Run 2: 2/5
+Run 3: 2/5
+
+Note: `questions.py` currently contains a sixth question. The five-question acceptance criteria above use Questions 1–5.
 
 ## Verdicts
 
@@ -223,13 +277,13 @@ I then ran all five of my in-corpus questions and all five OUT_OF_SCOPE question
 
      Milestone 2. -->
 
-| # | Criterion | Verdict | How I decided |
-|---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| #   | Criterion | Verdict | How I decided |
+| --- | --------- | ------- | ------------- |
+| 1   |           |         |               |
+| 2   |           |         |               |
+| 3   |           |         |               |
+| 4   |           |         |               |
+| 5   |           |         |               |
 
 ## Diagnoses
 
@@ -265,13 +319,13 @@ I then ran all five of my in-corpus questions and all five OUT_OF_SCOPE question
 <!-- Same format, same five criteria, three runs each.
      `python run_eval.py --label after` -->
 
-| Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
-|---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| Criterion                              | Target | Run 1 | Run 2 | Run 3 | Verdict |
+| -------------------------------------- | ------ | ----- | ----- | ----- | ------- |
+| 1. Retrieved chunk contains the answer | 4 of 5 |       |       |       |         |
+| 2. Every answer names a source         | 5 of 5 |       |       |       |         |
+| 3. Gate stops out-of-corpus questions  | 4 of 5 |       |       |       |         |
+| 4.                                     |        |       |       |       |         |
+| 5.                                     |        |       |       |       |         |
 
 **Did it help?**
 
