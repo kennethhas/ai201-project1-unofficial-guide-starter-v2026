@@ -277,13 +277,15 @@ Note: `questions.py` currently contains a sixth question. The five-question acce
 
      Milestone 2. -->
 
-| #   | Criterion | Verdict | How I decided |
-| --- | --------- | ------- | ------------- |
-| 1   |           |         |               |
-| 2   |           |         |               |
-| 3   |           |         |               |
-| 4   |           |         |               |
-| 5   |           |         |               |
+## Verdicts
+
+| #   | Criterion                                        | Verdict | How I decided                                                                                                                                                     |
+| --- | ------------------------------------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Retrieved chunks contain the answer              | MET     | All 5 of my first 5 test questions retrieved a chunk containing the answer, which is above my target of 4 of 5.                                                   |
+| 2   | Every answer names a source                      | MET     | All 5 answers named at least one source document in all three runs, meeting my target of 5 of 5.                                                                  |
+| 3   | The relevance gate stops out-of-corpus questions | MET     | The gate refused all 5 out-of-scope questions, which is above my target of at least 4 of 5.                                                                       |
+| 4   | Chunks can be understood on their own            | MET     | All 5 sampled chunks contained complete information that could be understood without needing the text before or after them, meeting my target of at least 4 of 5. |
+| 5   | Final answers contain the expected information   | MISSED  | Only 2 of my first 5 test questions contained the exact expected word or phrase in each run, so the result was 2 of 5 instead of my target of 5 of 5.             |
 
 ## Diagnoses
 
