@@ -287,6 +287,10 @@ Note: `questions.py` currently contains a sixth question. The five-question acce
 | 4   | Chunks can be understood on their own            | MET     | All 5 sampled chunks contained complete information that could be understood without needing the text before or after them, meeting my target of at least 4 of 5. |
 | 5   | Final answers contain the expected information   | MISSED  | Only 2 of my first 5 test questions contained the exact expected word or phrase in each run, so the result was 2 of 5 instead of my target of 5 of 5.             |
 
+
+**Criterion 5 revision:** The original run was recorded as **MISSED (2 of 5)**. After checking the failed answers against the corpus, I found that three expected phrases in `questions.py` were incorrect. I corrected those phrases without changing the 5-of-5 target. On the corrected evaluation, Criterion 5 passed **5 of 5 questions in all three runs**.
+
+
 ## Diagnoses
 
 <!-- For each miss: which stage caused it, and how. The stage alone isn't
@@ -310,19 +314,19 @@ Note: `questions.py` currently contains a sixth question. The five-question acce
 
 Criterion 5 — Final answers contain the expected information
 
-The original evaluation reported Criterion 5 as MISSED (2 of 5). After reviewing the failed questions against the source documents, I found that this was not a failure in loading, chunking, embedding, retrieval, or generation.
+The original run reported Criterion 5 as MISSED (2 of 5). I checked the three failed questions against their source documents and found that the pipeline was producing the correct answers. The problem was with three expected phrases in questions.py.
 
-The problem was with the measurement itself. Three expected phrases in questions.py did not match the correct information in the source documents:
+The library question expected 2-3 hours, but the source says two to three days.
 
-The library question expected 2-3 hours, but admin_library_holds.txt says two to three days.
+The printing question expected a couple dollars, but the source says $30 per semester.
 
-The printing question expected a couple dollars, but admin_printing_quota.txt says $30 per semester.
+The advising question expected credit hours, but the requirement to register is that the adviser hold must be lifted. Credit hours determine registration timing.
 
-The advising question expected credit hours, but the registration requirement in advising_registration.txt is that the adviser hold must be lifted. Credit hours are used to determine registration timing.
+Because the generated answers matched the source documents, this was a measurement problem rather than a loading, chunking, embedding, retrieval, or generation failure.
 
-The generated answers correctly reflected the source documents, so the apparent miss was caused by an incorrect answer key rather than a pipeline-stage failure.
+Revised in Unit 2: I corrected the three expected phrases while keeping the original 5-of-5 target.
 
-Revised in Unit 2: I corrected the three expected phrases in questions.py so the test measures the correct facts from the source documents. I did not lower the 5-of-5 target.
+After correcting the expected phrases and rerunning the evaluation, all five questions passed in all three runs. Criterion 5 changed from 2 of 5 under the incorrect answer key to 5 of 5 with the corrected measurement.
 
 
 ## The Improvement
