@@ -28,18 +28,18 @@ QUESTIONS = [
       {"question": "For Econ 101, will there be outside class where we learn outside of the classroom? ",
        "expects": " 4 hours "
 },
-      {"question": "How long will it take for my book to come in from the library? ", 
-       "expects": "2-3 hours "
+	{"question": "How long will it take for my book to come in from the library?",
+ 	 "expects": "two to three days"
 },
-      {"question": "How much printing quota do students receive?",
-       "expects": "a couple dollars "
+
+	{"question": "How much printing quota do students receive?",
+ 	  "expects": "$30"
 },
-      {"question": "What are the requirements for advising registration ?",
-        "expects": "credit hours"
+
+	{"question": "What are the requirements for advising registration ?",
+ 	  "expects": "adviser hold lifted"
 },
-      {"question": "What is the grade for passing a course ?", 
-        "expects": "C-"
-},
+    
 ]
 
 # Questions from a different world entirely. Your gate should refuse all five.

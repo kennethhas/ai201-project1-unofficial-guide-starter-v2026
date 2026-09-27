@@ -307,6 +307,24 @@ Note: `questions.py` currently contains a sixth question. The five-question acce
 
      Milestone 3. -->
 
+
+Criterion 5 — Final answers contain the expected information
+
+The original evaluation reported Criterion 5 as MISSED (2 of 5). After reviewing the failed questions against the source documents, I found that this was not a failure in loading, chunking, embedding, retrieval, or generation.
+
+The problem was with the measurement itself. Three expected phrases in questions.py did not match the correct information in the source documents:
+
+The library question expected 2-3 hours, but admin_library_holds.txt says two to three days.
+
+The printing question expected a couple dollars, but admin_printing_quota.txt says $30 per semester.
+
+The advising question expected credit hours, but the registration requirement in advising_registration.txt is that the adviser hold must be lifted. Credit hours are used to determine registration timing.
+
+The generated answers correctly reflected the source documents, so the apparent miss was caused by an incorrect answer key rather than a pipeline-stage failure.
+
+Revised in Unit 2: I corrected the three expected phrases in questions.py so the test measures the correct facts from the source documents. I did not lower the 5-of-5 target.
+
+
 ## The Improvement
 
 **What I changed:**
