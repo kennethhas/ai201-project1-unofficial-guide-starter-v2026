@@ -154,6 +154,12 @@ I kept the cutoff at 0.6 because my five in-corpus questions had best distances 
 
      Milestone 5. -->
 
+***UNIT 2 How I Used AI***
+
+I used AI to help review my evaluation results, compare failed answers against the source documents, and identify that Criterion 5 was failing because of incorrect expected phrases rather than a pipeline-stage problem.
+
+I also used AI to help reason through the Milestone 4 experiment, compare sentence-aware chunking with the fixed-size fallback strategy, and organize the before-and-after results. I verified the conclusions using the actual source documents, run logs, and chunk outputs rather than relying only on the AI explanation.
+
 **1.Understanding and changing the chunking strategy**
 
 I first used AI to help me understand the starter chunker.py before changing any code. I wanted to understand what fallback_split, split_documents, chunk size, and overlap were actually doing instead of replacing the function without knowing why.
@@ -341,10 +347,8 @@ After correcting the broken expected-answer measurement, I did not have a true p
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
 
-### Run Log — After
+### Run Log — Before
 
-<!-- Same format, same five criteria, three runs each.
-     `python run_eval.py --label after` -->
 
 | Criterion                                        | Target | Run 1 | Run 2 | Run 3 | Verdict |
 | -------------------------------------------------| ------ | ----- | ----- | ----- | ------- |
@@ -354,8 +358,10 @@ After correcting the broken expected-answer measurement, I did not have a true p
 | 4. Chunks can be understood on their own         | 4 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
 | 5. Final answers contain the expected information| 5 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
 
-### Run Log — Before
+### Run Log — After
 
+<!-- Same format, same five criteria, three runs each.
+     `python run_eval.py --label after` -->
 
 | Criterion                                        | Target | Run 1 | Run 2 | Run 3 | Verdict |
 | -------------------------------------------------| ------ | ----- | ----- | ----- | ------- |
@@ -397,6 +403,11 @@ For Criterion 4, I manually inspected five fallback chunks. All five could be un
      not.
 
      Milestone 5. -->
+After correcting the broken expected-answer measurement and testing a second chunking strategy, none of my five criteria are currently missed.
+
+The remaining limitation is that my test set is small. I only tested five in-scope questions and five out-of-scope questions, so the results do not prove the system will work equally well on every question in the corpus. The chunking comparison also showed no measurable difference because most campus_life documents are already short.
+
+If I continued improving the system, I would test a larger and more varied question set, especially questions that require information from longer documents or multiple chunks.
 
 ## What I'd Do Differently
 
@@ -404,3 +415,8 @@ For Criterion 4, I manually inspected five fallback chunks. All five could be un
      differently, and why?
 
      Milestone 5. -->
+If I wrote the criteria again, I would change Criterion 5 so it checks whether the final answer contains the correct fact from the source rather than relying only on one exact expected phrase.
+
+The original exact-phrase measurement caused three correct answers to be marked wrong because my expected phrases were incorrect. A better criterion would still be measurable, but it would focus on whether the answer preserves the correct source-supported information.
+
+
