@@ -332,8 +332,11 @@ After correcting the expected phrases and rerunning the evaluation, all five que
 ## The Improvement
 
 **What I changed:**
+I compared my sentence-aware chunking strategy with the original fixed-size fallback chunking strategy. My sentence-aware version keeps short documents whole and splits longer documents at sentence boundaries with one sentence of overlap. The fallback version splits documents using fixed-size character windows with overlap.
 
 **Why I picked it:**
+
+After correcting the broken expected-answer measurement, I did not have a true pipeline failure left to fix. I chose to test Criterion 4 more strictly by comparing two chunking strategies. I wanted to find out whether sentence-aware chunking actually made chunks easier to use or improved the system compared with the original fixed-size strategy.
 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
@@ -343,22 +346,47 @@ After correcting the expected phrases and rerunning the evaluation, all five que
 <!-- Same format, same five criteria, three runs each.
      `python run_eval.py --label after` -->
 
-| Criterion                              | Target | Run 1 | Run 2 | Run 3 | Verdict |
-| -------------------------------------- | ------ | ----- | ----- | ----- | ------- |
-| 1. Retrieved chunk contains the answer | 4 of 5 |       |       |       |         |
-| 2. Every answer names a source         | 5 of 5 |       |       |       |         |
-| 3. Gate stops out-of-corpus questions  | 4 of 5 |       |       |       |         |
-| 4.                                     |        |       |       |       |         |
-| 5.                                     |        |       |       |       |         |
+| Criterion                                        | Target | Run 1 | Run 2 | Run 3 | Verdict |
+| -------------------------------------------------| ------ | ----- | ----- | ----- | ------- |
+| 1. Retrieved chunk contains the answer           | 4 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
+| 2. Every answer names a source                   | 5 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
+| 3. Gate stops out-of-corpus questions            | 4 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
+| 4. Chunks can be understood on their own         | 4 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
+| 5. Final answers contain the expected information| 5 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
+
+### Run Log — Before
+
+
+| Criterion                                        | Target | Run 1 | Run 2 | Run 3 | Verdict |
+| -------------------------------------------------| ------ | ----- | ----- | ----- | ------- |
+| 1. Retrieved chunk contains the answer           | 4 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
+| 2. Every answer names a source                   | 5 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
+| 3. Gate stops out-of-corpus questions            | 4 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
+| 4. Chunks can be understood on their own         | 4 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
+| 5. Final answers contain the expected information| 5 of 5 | 5 of 5|5 of 5 |5 of 5 | MET     |
+
 
 **Did it help?**
 
-<!-- Say plainly whether it did, and how you know. If it made things worse,
-     say that — a change that backfired, honestly reported, earns full credit
-     and is more interesting than one that worked. What matters is that you can
-     tell.
+The fixed-size fallback chunking did not improve the measured results. The sentence-aware strategy produced 90 chunks averaging 311 characters, while the fallback strategy produced 88 chunks averaging 317 characters. Both strategies passed all five test questions in all three runs, and both refused all five out-of-scope questions.
 
-     Milestone 4. -->
+The result suggests that chunking strategy did not make a measurable difference for this corpus. The campus_life documents are already short, so most documents remain close to one chunk under either strategy. The experiment showed that my sentence-aware chunking did not produce a measurable accuracy advantage over the fallback strategy on this test set.
+
+### Evidence
+
+**Sentence-aware chunking**
+- 90 chunks
+- 311 characters on average
+- 5 of 5 test questions passed in all three runs
+- 5 of 5 out-of-scope questions were refused
+
+**Fixed-size fallback chunking**
+- 88 chunks
+- 317 characters on average
+- 5 of 5 test questions passed in all three runs
+- 5 of 5 out-of-scope questions were refused
+
+For Criterion 4, I manually inspected five fallback chunks. All five could be understood on their own without needing surrounding text. Because the chunking and sampling are deterministic, the same five chunks appeared in the repeated runs.
 
 ## What's Still Broken
 

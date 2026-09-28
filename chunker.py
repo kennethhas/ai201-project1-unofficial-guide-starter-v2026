@@ -83,12 +83,16 @@ def fallback_split(
 
 
 def split_documents(documents: list[Document]) -> list[Chunk]:
+
+     
+    """return fallback_split(documents) @testing:The fixed-size fallback chunker performed the same as your sentence-aware chunker on these test questions."""
     """
     Split documents into sentence-aware chunks.
 
     Short documents stay whole. Longer documents are split at sentence
     boundaries, with one sentence of overlap to help preserve context.
     """
+    
     max_size = 500
     chunks: list[Chunk] = []
 
@@ -153,6 +157,7 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
             )
 
     return chunks
+    
 
 
 def describe(chunks: list[Chunk]) -> str:
