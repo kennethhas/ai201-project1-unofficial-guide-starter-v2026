@@ -160,6 +160,8 @@ I used AI to help review my evaluation results, compare failed answers against t
 
 I also used AI to help reason through the Milestone 4 experiment, compare sentence-aware chunking with the fixed-size fallback strategy, and organize the before-and-after results. I verified the conclusions using the actual source documents, run logs, and chunk outputs rather than relying only on the AI explanation.
 
+***UNIT 1***
+
 **1.Understanding and changing the chunking strategy**
 
 I first used AI to help me understand the starter chunker.py before changing any code. I wanted to understand what fallback_split, split_documents, chunk size, and overlap were actually doing instead of replacing the function without knowing why.
@@ -283,8 +285,6 @@ Note: `questions.py` currently contains a sixth question. The five-question acce
 
      Milestone 2. -->
 
-## Verdicts
-
 | #   | Criterion                                        | Verdict | How I decided                                                                                                                                                     |
 | --- | ------------------------------------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | Retrieved chunks contain the answer              | MET     | All 5 of my first 5 test questions retrieved a chunk containing the answer, which is above my target of 4 of 5.                                                   |
@@ -334,6 +334,12 @@ Revised in Unit 2: I corrected the three expected phrases while keeping the orig
 
 After correcting the expected phrases and rerunning the evaluation, all five questions passed in all three runs. Criterion 5 changed from 2 of 5 under the incorrect answer key to 5 of 5 with the corrected measurement.
 
+**Tightened criterion**
+
+Because the corrected evaluation left no true pipeline miss, there was no loading, chunking, embedding, retrieval, or generation failure to diagnose.
+
+If I tightened one criterion, I would tighten Criterion 4 from **at least 4 of 5 sampled chunks being understandable on their own** to **5 of 5 sampled chunks being understandable on their own**. Since the `campus_life` documents are short and focused, I now expect every sampled chunk to contain enough context to be understood independently.
+
 
 ## The Improvement
 
@@ -342,7 +348,7 @@ I compared my sentence-aware chunking strategy with the original fixed-size fall
 
 **Why I picked it:**
 
-After correcting the broken expected-answer measurement, I did not have a true pipeline failure left to fix. I chose to test Criterion 4 more strictly by comparing two chunking strategies. I wanted to find out whether sentence-aware chunking actually made chunks easier to use or improved the system compared with the original fixed-size strategy.
+After correcting the broken expected-answer measurement, no true pipeline failure remained. I tightened Criterion 4 from 4 of 5 to 5 of 5 understandable chunks, then compared my sentence-aware chunking with the original fixed-size strategy to see whether the chunking method affected chunk quality or overall test performance.
 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
